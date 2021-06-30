@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter.ttk import Style
+
 from win32api import GetMonitorInfo, MonitorFromPoint
 
 import math
@@ -14,7 +16,8 @@ window_width = str(math.floor(width/5))
 
 app.title("Login to your MeaxisNetwork Account")
 app.resizable(False, False)
-# app.overrideredirect(1)
+app.configure(background="#1c1c20")
+app.overrideredirect(True)
 
 if platform.system() == "Windows":
 	monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
@@ -22,8 +25,11 @@ if platform.system() == "Windows":
 	work_area = monitor_info.get("Work")
 	taskbar_height = format(monitor_area[3]-work_area[3])
 
-	geometry_string = window_width + "x" + window_height + "+" + str(width - int(window_width)) + "+" + str(
-		height - (int(window_height) + int(taskbar_height)+32))
+	width = width - int(window_width)
+	height = height - int(window_height)
+
+	geometry_string = window_width + "x" + window_height + "+" + str(width) + "+" + str(
+		height)
 
 	print(geometry_string)
 else:
@@ -31,5 +37,4 @@ else:
 		height - int(window_height))
 
 app.geometry(geometry_string)
-
 app.mainloop()
